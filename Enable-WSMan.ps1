@@ -1,9 +1,11 @@
+#Here just define your variable
 $YourHostName = "Hostname"
 $YourDomainName = "domain.local"
-# Enable WSMandCredSSP Role Client with delegation
+
+# Test Connection
 if(!(Test-WsMan -Authentication Credssp -ComputerName "$YourHostName.$YourDomainName" -Credential $Credential -ErrorAction SilentlyContinue))
 {
-## Condition if Enable-WSManCredSSP failed (can happen) will do it directly on registry keys
+    # Try to Enable-WSManCredSSP - If failed (can happen) will do it directly on registry keys
     if(!(Enable-WSManCredSSP -Role "Client" -DelegateComputer "*.$YourDomainName" -Force -ErrorAction SilentlyContinue)){
         $key = @("wsman/*.$YourDomainName")
         $mainpath = 'hklm:\SOFTWARE\Policies\Microsoft\Windows\CredentialsDelegation'
