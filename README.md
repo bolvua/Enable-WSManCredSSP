@@ -9,6 +9,6 @@ That is because command has no access for registry editing even when you are run
   2. Chceck WinRM configs (winrm get winrm/config/client - winrm get winrm/config/service)
   2. Set TrustedHosts (Set-Item -Path "WSMan:\localhost\Client\TrustedHosts" -Value '*' -Force)
 
-### Just Set-up your DomainName and HostName of your local computer
+### Just Set-up your DomainName and HostName of your target computer and your domain credentials
 
 ### In couple days I will create script also for Disable-WSManCredSSP
