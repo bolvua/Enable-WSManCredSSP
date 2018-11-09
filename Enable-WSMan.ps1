@@ -1,9 +1,15 @@
 #Here just define your variable
-$YourHostName = "Hostname"
+$DomainUserName = "DomainUserAdmin"
+$RemotePassword = "YourPassword"
+$RemoteHostname = "HostName"
 $YourDomainName = "domain.local"
 
+#Create Credential variable
+$Password = ConvertTo-SecureString $RemotePassword -AsPlainText -Force
+$Credential = New-Object System.Management.Automation.PSCredential("$YourDomainName\$DomainUserName",$Password)
+
 # Test Connection
-if(!(Test-WsMan -Authentication Credssp -ComputerName "$YourHostName.$YourDomainName" -Credential $Credential -ErrorAction SilentlyContinue))
+if(!(Test-WsMan -Authentication Credssp -ComputerName "$RemoteHostname.$YourDomainName" -Credential $Credential -ErrorAction SilentlyContinue))
 {
     # Try to Enable-WSManCredSSP - If failed (can happen) will do it directly on registry keys
     if(!(Enable-WSManCredSSP -Role "Client" -DelegateComputer "*.$YourDomainName" -Force -ErrorAction SilentlyContinue)){
