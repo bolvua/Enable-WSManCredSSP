@@ -1,3 +1,6 @@
+####################################################
+### Author: Tomas Jeck
+
 #Here just define your variable
 $DomainUserName = "DomainUserAdmin"
 $RemotePassword = "YourPassword"
