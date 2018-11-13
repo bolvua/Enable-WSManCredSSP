@@ -12,7 +12,11 @@ $Credential = New-Object System.Management.Automation.PSCredential("$YourDomainN
 if(!(Test-WsMan -Authentication Credssp -ComputerName "$RemoteHostname.$YourDomainName" -Credential $Credential -ErrorAction SilentlyContinue))
 {
     # Try to Enable-WSManCredSSP - If failed (can happen) will do it directly on registry keys
-    if(!(Enable-WSManCredSSP -Role "Client" -DelegateComputer "*.$YourDomainName" -Force -ErrorAction SilentlyContinue)){
+    try {
+        $credSSP = Enable-WSManCredSSP -Role "Client" -DelegateComputer "*.$domainName" -Force -ErrorAction SilentlyContinue
+    }
+    catch { "" }
+    if(!($credSSP)){
         #in object $key can be added more than one record. Example @("wsman/*.$YourDomainName","wsman/*.$secondDomainName",..)
         $key = @("wsman/*.$YourDomainName")
         $mainpath = 'hklm:\SOFTWARE\Policies\Microsoft\Windows\CredentialsDelegation'
